@@ -1,0 +1,6 @@
+These are the files used to implement the random walk baseline method.
+
+The main file is runRandomWalk.m. Here you can:
+	Define the MS parameters
+	Define the MAV parameters
+	Generates the coverage and age value results for the specified number of generations

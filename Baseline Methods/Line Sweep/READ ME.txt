@@ -1,0 +1,1 @@
+This is the matlab code for implementing a basic sweep-planner. Note, the sub-regions are hard coded for the specified 25x25m MS.

@@ -1,0 +1,53 @@
+This folder contains the Matlab scripts to evolve the NNs using NEAT.
+------------------------------
+
+The File is: Run_neatSimulation_D.m, this calls all the other files necessry for evolution. 
+Here you can:
+	Specify the dimensions of the MS (The 'grid_MS' strucutre)
+	Choose to Evolve a NN or test an existing one (the 'test' parameter)
+	Define simulation parameters ('sim' strucutre). NOTE: the inputs into the NN are controlled by sim.inFormat parameter.
+		-  sim.inFormat = 2 (Pure duarate, case 1 for report)
+		-  sim.inFormat = 4 (Input case 2 from report)
+		-  sim.inFormat = 6 (Input case 4 from report)
+		-  sim.inFormat = 7 (Input case 5 from report)
+		-  sim.inFormat = 8 (Input case 3 from report)
+		- see the nn_inputs script for more details
+	Assign MAV properties like max speed, sensor range, refuelling parameters etc.
+	Define the maximum population size for the NEAT evolution
+
+The other files are as follows:
+For the simulated environment:
+	ageMS_D - Updates the (global) age map at each time step	
+	agentDynamics_D - This defines the dynamics of the MAVs used
+	antennae_D - Implements the 'feelers'. Returns both cell ages and ranges
+	antennaeCell_D - Implements the 'feelers'. Returns only the cell age
+	antennaeCellAve_D - Implements the 'feelers'. Returns average cell ages along the feeler
+	calcTotalAge_D - sum of all individual cell ages (excluding obstacles)
+	geofence - This calulate the inputs for Duartes geofence sensors
+	getMS_arrayIndex_D - returns the x and y indeces of the current cell the MAV is in
+	initEnviron_D - initialises a (fixed) MS with no obstacles. This will not vary randomly 
+	initEnviron_Rand - initialises a random MS with obstacles. This will vary randomly in size and shape
+	interDroneRange - Calculates values of the robot sensor from Duarte
+	liverpool_Inputs - calulates the inputs for replicating the experiment from Liverpool (Input case 5 from my report)
+	visited_D - determines which cells were visited  in the current time step and update their age.
+	weightedAveMS_D - calculates the input values for Input Case 4
+
+NN Code:
+	calcNN_edit - calculates the outputs for each of the nodes in the NN
+	formatNN_edit - This is an improvement over the original NEAT code. This determines the structure of the NN allowing the calculation of the outputs to be more efficient.
+	initial_population - Original NEAT Code. Creates the initial NN for evolution
+	performNeatRun - Original NEAT code. This handels the evolution, and all NEAT parameters are defined here. Whether you want a random or a fixed MS is also defined here.
+	rep - Original NEAT code from http://www.cs.ucf.edu/~kstanley/neat.html.
+	reproduce - Original NEAT code from http://www.cs.ucf.edu/~kstanley/neat.html.
+	simulatedRun_D - Performs the (single) simulation for the current population and calculates the Fitness value. NOTE: the fitness function used is defined here.
+	simulatedRun_Extended - Performs multiple simulations for the current population and calculates the Fitness value. NOTE: the fitness function used is defined here.
+
+For Refuelling:
+	avoidance - implements the additional avoidance measures
+	behaviourTree - Implements the BT. NOTE: threshold values are adjusted here
+	fuel - Updates the current fuel level of the MAV at each time step
+	homing - Travel towards the Depot
+
+Misc.
+	controllerComparison.m was used to compare the perofmance of the NNs created from the different input types
+	testInput6.m was used for the post evaluation of the chosen input type
